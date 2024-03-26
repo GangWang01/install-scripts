@@ -324,6 +324,10 @@ get_machine_architecture() {
             echo "loongarch64"
             return 0
             ;;
+        x86_64)
+            say_err "Architecture \`$CPUName\` not supported. If you think this is a bug, report it at https://github.com/dotnet/install-scripts/issues"
+            return 1
+            ;;
         esac
     fi
 
