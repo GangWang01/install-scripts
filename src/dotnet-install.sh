@@ -297,6 +297,7 @@ get_machine_architecture() {
 
     if command -v uname > /dev/null; then
         CPUName=$(uname -m)
+        say "cpu name: $CPUName"
         case $CPUName in
         armv*l)
             echo "arm"
@@ -339,10 +340,12 @@ get_normalized_architecture_from_architecture() {
     local architecture="$(to_lowercase "$1")"
 
     if [[ $architecture == \<auto\> ]]; then
+        say "architecture: auto"
         echo "$(get_machine_architecture)"
         return 0
     fi
 
+    say "architecture: $architecture"
     case "$architecture" in
         amd64|x64)
             echo "x64"
@@ -1821,6 +1824,8 @@ fi
 
 check_min_reqs
 calculate_vars
+say "For testing purpose, exit"
+exit 0
 # generate_regular_links call below will 'exit' if the determined version is already installed.
 generate_download_links
 
