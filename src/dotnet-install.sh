@@ -325,8 +325,8 @@ get_machine_architecture() {
             return 0
             ;;
         x86_64)
-            say_err "Architecture \`$CPUName\` not supported. If you think this is a bug, report it at https://github.com/dotnet/install-scripts/issues"
-            return 1
+            echo "x86_64"
+            return 0
             ;;
         esac
     fi
@@ -345,7 +345,13 @@ get_normalized_architecture_from_architecture() {
 
     if [[ $architecture == \<auto\> ]]; then
         say "architecture: auto"
-        echo "$(get_machine_architecture)"
+        machineArchitecture="$(get_machine_architecture)"
+        if [["$machineArchitecture" == "x86_64"]]; then
+            say_err "Architecture \`$architecture\` not supported. If you think this is a bug, report it at https://github.com/dotnet/install-scripts/issues"
+            return 1
+        fi
+        say "supported"
+        echo $machineArchitecture
         return 0
     fi
 
